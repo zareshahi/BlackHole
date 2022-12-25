@@ -1774,8 +1774,8 @@ class _ArtWorkWidgetState extends State<ArtWorkWidget> {
                                               ),
                                               child: ExcludeSemantics(
                                                 child: Slider(
-                                                  value: widget
-                                                      .audioHandler.volume.value,
+                                                  value: widget.audioHandler
+                                                      .volume.value,
                                                   onChanged: (_) {},
                                                 ),
                                               ),
