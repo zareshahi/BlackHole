@@ -1982,7 +1982,7 @@ class NameNControls extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             SizedBox(
-                              height: titleBoxHeight / 10,
+                              height: titleBoxHeight / 20,
                             ),
 
                             /// Title container
@@ -2004,7 +2004,7 @@ class NameNControls extends StatelessWidget {
                             ),
 
                             SizedBox(
-                              height: titleBoxHeight / 30,
+                              height: titleBoxHeight / 35,
                             ),
 
                             /// Subtitle container
