@@ -18,8 +18,10 @@
  */
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart';
+import 'package:logging/logging.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 class YouTubeServices {
@@ -104,6 +106,7 @@ class YouTubeServices {
 
       return {'body': finalResult, 'head': finalHeadResult};
     } catch (e) {
+      Logger.root.severe('Error in getMusicHome: $e');
       return {};
     }
   }
@@ -121,6 +124,7 @@ class YouTubeServices {
       final Map res = jsonDecode(response.body) as Map;
       return res['suggestions'] as List;
     } catch (e) {
+      Logger.root.severe('Error in getSearchSuggestions: $e');
       return [];
     }
   }
@@ -151,6 +155,7 @@ class YouTubeServices {
 
       return result;
     } catch (e) {
+      Logger.root.severe('Error in formatVideoItems: $e');
       return List.empty();
     }
   }
@@ -182,6 +187,7 @@ class YouTubeServices {
 
       return result;
     } catch (e) {
+      Logger.root.severe('Error in formatChartItems: $e');
       return List.empty();
     }
   }
@@ -213,6 +219,7 @@ class YouTubeServices {
 
       return result;
     } catch (e) {
+      Logger.root.severe('Error in formatItems: $e');
       return List.empty();
     }
   }
@@ -255,6 +262,7 @@ class YouTubeServices {
 
       return result;
     } catch (e) {
+      Logger.root.severe('Error in formatHeadItems: $e');
       return List.empty();
     }
   }
@@ -265,7 +273,12 @@ class YouTubeServices {
     // bool preferM4a = true,
   }) async {
     if (video.duration?.inSeconds == null) return null;
-    final List urls = await getUri(video);
+    final List<String> urls = await getUri(video);
+    final String finalUrl = quality == 'High' ? urls.last : urls.first;
+    final String expireAt = RegExp('expire=(.*?)&')
+            .firstMatch(finalUrl)!
+            .group(1) ??
+        (DateTime.now().millisecondsSinceEpoch ~/ 1000 + 3600 * 5.5).toString();
     return {
       'id': video.id.value,
       'album': video.author,
@@ -276,7 +289,8 @@ class YouTubeServices {
       'secondImage': video.thumbnails.highResUrl,
       'language': 'YouTube',
       'genre': 'YouTube',
-      'url': quality == 'High' ? urls.last : urls.first,
+      'expire_at': expireAt,
+      'url': finalUrl,
       'lowUrl': urls.first,
       'highUrl': urls.last,
       'year': video.uploadDate?.year.toString(),
@@ -401,21 +415,18 @@ class YouTubeServices {
         await yt.videos.streamsClient.getManifest(video.id);
     final List<AudioOnlyStreamInfo> sortedStreamInfo =
         manifest.audioOnly.sortByBitrate();
-    // if (preferM4a) {
-    //   final List<AudioOnlyStreamInfo> temp = sortedStreamInfo
-    //       .where((element) => element.audioCodec == 'mp4')
-    //       .toList();
+    if (Platform.isIOS) {
+      final List<AudioOnlyStreamInfo> m4aStreams = sortedStreamInfo
+          .where((element) => element.audioCodec.contains('mp4'))
+          .toList();
 
-    //   if (temp.isNotEmpty) {
-    //     if (quality == 'High') {
-    //       final AudioOnlyStreamInfo streamInfo = temp.last;
-    //       return streamInfo.url.toString();
-    //     } else {
-    //       final AudioOnlyStreamInfo streamInfo = temp.first;
-    //       return streamInfo.url.toString();
-    //     }
-    //   }
-    // }
+      if (m4aStreams.isNotEmpty) {
+        return [
+          m4aStreams.first.url.toString(),
+          m4aStreams.last.url.toString(),
+        ];
+      }
+    }
     return [
       sortedStreamInfo.first.url.toString(),
       sortedStreamInfo.last.url.toString(),
