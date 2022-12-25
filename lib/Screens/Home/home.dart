@@ -631,82 +631,72 @@ class _HomePageState extends State<HomePage> {
                                                     ),
                                                     Row(
                                                       children: [
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .only(
-                                                            left: 15.0,
-                                                          ),
-                                                          child: Text(
-                                                            AppLocalizations.of(
+                                                        const SizedBox(
+                                                            width: 15.0),
+                                                        Text(
+                                                          AppLocalizations.of(
+                                                            context,
+                                                          )!
+                                                              .homeGreet,
+                                                          style: TextStyle(
+                                                            letterSpacing: 2,
+                                                            color: Theme.of(
                                                               context,
-                                                            )!
-                                                                .homeGreet,
-                                                            style: TextStyle(
-                                                              letterSpacing: 2,
-                                                              color: Theme.of(
-                                                                context,
-                                                              )
-                                                                  .colorScheme
-                                                                  .secondary,
-                                                              fontSize: 30,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                            ),
+                                                            )
+                                                                .colorScheme
+                                                                .secondary,
+                                                            fontSize: 30,
+                                                            fontWeight:
+                                                                FontWeight.bold,
                                                           ),
                                                         ),
                                                       ],
                                                     ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                        left: 15.0,
-                                                      ),
-                                                      child: Row(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .end,
-                                                        children: [
-                                                          ValueListenableBuilder(
-                                                            valueListenable:
-                                                                Hive.box(
-                                                              'settings',
-                                                            ).listenable(),
-                                                            builder: (
-                                                              BuildContext
-                                                                  context,
-                                                              Box box,
-                                                              Widget? child,
-                                                            ) {
-                                                              return Text(
-                                                                (box.get('name') ==
-                                                                            null ||
-                                                                        box.get('name') ==
-                                                                            '')
-                                                                    ? 'Guest'
-                                                                    : box
-                                                                        .get(
-                                                                          'name',
-                                                                        )
-                                                                        .split(
-                                                                          ' ',
-                                                                        )[0]
-                                                                        .toString(),
-                                                                style:
-                                                                    const TextStyle(
-                                                                  letterSpacing:
-                                                                      2,
-                                                                  fontSize: 20,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                ),
-                                                              );
-                                                            },
-                                                          ),
-                                                        ],
-                                                      ),
+                                                    Row(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .end,
+                                                      children: [
+                                                        const SizedBox(
+                                                            width: 15.0),
+                                                        ValueListenableBuilder(
+                                                          valueListenable:
+                                                              Hive.box(
+                                                            'settings',
+                                                          ).listenable(),
+                                                          builder: (
+                                                            BuildContext
+                                                                context,
+                                                            Box box,
+                                                            Widget? child,
+                                                          ) {
+                                                            return Text(
+                                                              (box.get('name') ==
+                                                                          null ||
+                                                                      box.get('name') ==
+                                                                          '')
+                                                                  ? 'Guest'
+                                                                  : box
+                                                                      .get(
+                                                                        'name',
+                                                                      )
+                                                                      .split(
+                                                                        ' ',
+                                                                      )[0]
+                                                                      .toString(),
+                                                              style:
+                                                                  const TextStyle(
+                                                                letterSpacing:
+                                                                    2,
+                                                                fontSize: 20,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                              ),
+                                                            );
+                                                          },
+                                                        ),
+                                                      ],
                                                     ),
                                                   ],
                                                 ),
@@ -723,7 +713,11 @@ class _HomePageState extends State<HomePage> {
                                         stretch: true,
                                         toolbarHeight: 65,
                                         title: Align(
-                                          alignment: Alignment.centerRight,
+                                          alignment:
+                                              Directionality.of(context) ==
+                                                      TextDirection.rtl
+                                                  ? Alignment.centerLeft
+                                                  : Alignment.centerRight,
                                           child: AnimatedBuilder(
                                             animation: _scrollController,
                                             builder: (context, child) {

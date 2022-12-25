@@ -1747,67 +1747,70 @@ class _ArtWorkWidgetState extends State<ArtWorkWidget> {
                         stream: widget.audioHandler.volume,
                         builder: (context, snapshot) {
                           final double volumeValue = snapshot.data ?? 1.0;
-                          return Center(
-                            child: SizedBox(
-                              width: 60.0,
-                              height: widget.width * 0.7,
-                              child: Card(
-                                color: Colors.black87,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                                clipBehavior: Clip.antiAlias,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Expanded(
-                                      child: FittedBox(
-                                        fit: BoxFit.fitHeight,
-                                        child: RotatedBox(
-                                          quarterTurns: -1,
-                                          child: SliderTheme(
-                                            data: SliderTheme.of(context)
-                                                .copyWith(
-                                              thumbShape:
-                                                  HiddenThumbComponentShape(),
-                                              activeTrackColor:
-                                                  Theme.of(context)
-                                                      .colorScheme
-                                                      .secondary,
-                                              inactiveTrackColor:
-                                                  Theme.of(context)
-                                                      .colorScheme
-                                                      .secondary
-                                                      .withOpacity(0.4),
-                                              trackShape:
-                                                  const RoundedRectSliderTrackShape(),
-                                            ),
-                                            child: ExcludeSemantics(
-                                              child: Slider(
-                                                value: widget
-                                                    .audioHandler.volume.value,
-                                                onChanged: (_) {},
+                          return Directionality(
+                            textDirection: TextDirection.ltr,
+                            child: Center(
+                              child: SizedBox(
+                                width: 60.0,
+                                height: widget.width * 0.7,
+                                child: Card(
+                                  color: Colors.black87,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  clipBehavior: Clip.antiAlias,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Expanded(
+                                        child: FittedBox(
+                                          fit: BoxFit.fitHeight,
+                                          child: RotatedBox(
+                                            quarterTurns: -1,
+                                            child: SliderTheme(
+                                              data: SliderTheme.of(context)
+                                                  .copyWith(
+                                                thumbShape:
+                                                    HiddenThumbComponentShape(),
+                                                activeTrackColor:
+                                                    Theme.of(context)
+                                                        .colorScheme
+                                                        .secondary,
+                                                inactiveTrackColor:
+                                                    Theme.of(context)
+                                                        .colorScheme
+                                                        .secondary
+                                                        .withOpacity(0.4),
+                                                trackShape:
+                                                    const RoundedRectSliderTrackShape(),
+                                              ),
+                                              child: ExcludeSemantics(
+                                                child: Slider(
+                                                  value: widget
+                                                      .audioHandler.volume.value,
+                                                  onChanged: (_) {},
+                                                ),
                                               ),
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                        bottom: 20.0,
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                          bottom: 20.0,
+                                        ),
+                                        child: Icon(
+                                          volumeValue == 0
+                                              ? Icons.volume_off_rounded
+                                              : volumeValue > 0.6
+                                                  ? Icons.volume_up_rounded
+                                                  : Icons.volume_down_rounded,
+                                          color: Colors.white,
+                                        ),
                                       ),
-                                      child: Icon(
-                                        volumeValue == 0
-                                            ? Icons.volume_off_rounded
-                                            : volumeValue > 0.6
-                                                ? Icons.volume_up_rounded
-                                                : Icons.volume_down_rounded,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),

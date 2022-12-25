@@ -159,9 +159,9 @@ class _SaavnHomePageState extends State<SaavnHomePage>
                         children: [
                           Row(
                             children: [
+                              const SizedBox(width: 15),
                               Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(15, 10, 0, 5),
+                                padding: const EdgeInsets.fromLTRB(0, 10, 0, 5),
                                 child: Text(
                                   AppLocalizations.of(context)!.lastSession,
                                   style: TextStyle(
@@ -433,19 +433,25 @@ class _SaavnHomePageState extends State<SaavnHomePage>
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(15, 10, 0, 5),
-                          child: Text(
-                            data['modules'][lists[idx]]?['title']
-                                    ?.toString()
-                                    .unescape() ??
-                                '',
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.secondary,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                        Row(
+                          children: [
+                            const SizedBox(width: 15),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 10, 0, 5),
+                              child: Text(
+                                data['modules'][lists[idx]]?['title']
+                                        ?.toString()
+                                        .unescape() ??
+                                    '',
+                                style: TextStyle(
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
-                          ),
+                          ],
                         ),
                         SizedBox(
                           height: boxSize + 15,

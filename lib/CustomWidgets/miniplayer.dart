@@ -103,19 +103,22 @@ class _MiniPlayerState extends State<MiniPlayer> {
                                     ),
                                   ),
                                   child: Center(
-                                    child: Slider(
-                                      inactiveColor: Colors.transparent,
-                                      // activeColor: Colors.white,
-                                      value: position.inSeconds.toDouble(),
-                                      max: mediaItem.duration!.inSeconds
-                                          .toDouble(),
-                                      onChanged: (newPosition) {
-                                        audioHandler.seek(
-                                          Duration(
-                                            seconds: newPosition.round(),
-                                          ),
-                                        );
-                                      },
+                                    child: Directionality(
+                                      textDirection: TextDirection.ltr,
+                                      child: Slider(
+                                        inactiveColor: Colors.transparent,
+                                        // activeColor: Colors.white,
+                                        value: position.inSeconds.toDouble(),
+                                        max: mediaItem.duration!.inSeconds
+                                            .toDouble(),
+                                        onChanged: (newPosition) {
+                                          audioHandler.seek(
+                                            Duration(
+                                              seconds: newPosition.round(),
+                                            ),
+                                          );
+                                        },
+                                      ),
                                     ),
                                   ),
                                 );
@@ -193,6 +196,17 @@ class _MiniPlayerState extends State<MiniPlayer> {
                                                       .toFilePath(),
                                                 ),
                                               ),
+                                              errorBuilder: (
+                                                BuildContext context,
+                                                Object exception,
+                                                StackTrace? stackTrace,
+                                              ) {
+                                                return const Image(
+                                                  fit: BoxFit.cover,
+                                                  image: AssetImage(
+                                                      'assets/cover.jpg'),
+                                                );
+                                              },
                                             ),
                                           )
                                         : SizedBox.square(
@@ -226,14 +240,17 @@ class _MiniPlayerState extends State<MiniPlayer> {
                                           ),
                                   ),
                                 ),
-                                trailing: ControlButtons(
-                                  audioHandler,
-                                  miniplayer: true,
-                                  buttons: mediaItem.artUri
-                                          .toString()
-                                          .startsWith('file:')
-                                      ? ['Like', 'Play/Pause', 'Next']
-                                      : preferredMiniButtons,
+                                trailing: Directionality(
+                                  textDirection: TextDirection.ltr,
+                                  child: ControlButtons(
+                                    audioHandler,
+                                    miniplayer: true,
+                                    buttons: mediaItem.artUri
+                                            .toString()
+                                            .startsWith('file:')
+                                        ? ['Like', 'Play/Pause', 'Next']
+                                        : preferredMiniButtons,
+                                  ),
                                 ),
                               ),
                               child!,
