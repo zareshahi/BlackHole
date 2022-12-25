@@ -1549,7 +1549,8 @@ class _ArtWorkWidgetState extends State<ArtWorkWidget> {
                           Widget? child,
                         ) {
                           return value
-                              ? lyrics['lyrics'] == ''
+                              ? (lyrics['lyrics'] == '' ||
+                                      lyrics['lyrics'] == null)
                                   ? emptyScreen(
                                       context,
                                       0,
@@ -1569,7 +1570,17 @@ class _ArtWorkWidgetState extends State<ArtWorkWidget> {
                                         fontSize: 16.0,
                                       ),
                                     )
-                              : child!;
+                              : emptyScreen(
+                                  context,
+                                  0,
+                                  ':( ',
+                                  100.0,
+                                  AppLocalizations.of(context)!.lyrics,
+                                  60.0,
+                                  AppLocalizations.of(context)!.notAvailable,
+                                  20.0,
+                                  useWhite: true,
+                                );
                         },
                       ),
                     ),
