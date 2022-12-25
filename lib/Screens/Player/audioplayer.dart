@@ -1364,6 +1364,17 @@ class NowPlayingStream extends StatelessWidget {
                                             queue[index].artUri!.toFilePath(),
                                           ),
                                         ),
+                                        errorBuilder: (
+                                          BuildContext context,
+                                          Object exception,
+                                          StackTrace? stackTrace,
+                                        ) {
+                                          return const Image(
+                                            fit: BoxFit.cover,
+                                            image:
+                                                AssetImage('assets/cover.jpg'),
+                                          );
+                                        },
                                       )
                                     : CachedNetworkImage(
                                         fit: BoxFit.cover,
